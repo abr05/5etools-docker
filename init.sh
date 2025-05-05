@@ -37,13 +37,13 @@ DL_LINK=${DL_LINK:-https://github.com/5etools-mirror-3/5etools-src.git}
 IMG_LINK=${IMG_LINK:-https://github.com/5etools-mirror-2/5etools-img}
 
 echo " === Using GitHub mirror at $DL_LINK"
-if [ ! -d "./.git" ]; then # if no git repository already exists
+if [ ! -d "/usr/local/apache2/htdocs/.git" ]; then # if no git repository already exists
     echo " === No existing git repository, creating one"
     git config --global user.email "autodeploy@localhost"
     git config --global user.name "AutoDeploy"
     git config --global pull.rebase false # Squelch nag message
     git config --global --add safe.directory '/usr/local/apache2/htdocs' # Disable directory ownership checking, required for mounted volumes
-    git clone $DL_LINK . # clone the repo with no files and no object history
+    git clone --depth=1 "$DL_LINK" /usr/local/apache2/htdocs # clone the repo with no files and no object history
 else
     echo " === Using existing git repository"
     git config --global --add safe.directory '/usr/local/apache2/htdocs' # Disable directory ownership checking, required for mounted volumes
