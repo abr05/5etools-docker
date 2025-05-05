@@ -15,5 +15,7 @@ RUN echo "<Location /server-status>\n"\
 >> /usr/local/apache2/conf/httpd.conf
 
 WORKDIR /usr/local/apache2/htdocs/
-RUN chown -R $PUID:$PGID /usr/local/apache2/htdocs
+RUN mkdir -p /usr/local/apache2/htdocs && \
+    chown -R www-data:www-data /usr/local/apache2/htdocs
 CMD ["/bin/bash","/init.sh"]
+
